@@ -15,15 +15,16 @@ export async function PATCH(request: NextRequest, { params }: Props) {
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
 
+  // Use `params.id` directly, assuming it is already a string
   const user = await prisma.user.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id }, // No need to parse to int, use it as a string
   });
 
   if (!user) {
     return NextResponse.json({ error: "User Not Found" }, { status: 404 });
   }
 
-  if (body?.password && body.password != "") {
+  if (body?.password && body.password !== "") {
     const hashPassword = await bcrypt.hash(body.password, 10);
     body.password = hashPassword;
   } else {
@@ -43,7 +44,7 @@ export async function PATCH(request: NextRequest, { params }: Props) {
   }
 
   const updateUser = await prisma.user.update({
-    where: { id: user.id },
+    where: { id: user.id }, // Assuming `user.id` is a string
     data: {
       ...body,
     },
