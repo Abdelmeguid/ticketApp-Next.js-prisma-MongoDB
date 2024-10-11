@@ -1,7 +1,7 @@
 import UserForm from "@/components/UserForm";
 import React from "react";
 import DataTableSimple from "./data-table-simple";
-//test
+//test2
 import prisma from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import options from "../api/auth/[...nextauth]/options";
